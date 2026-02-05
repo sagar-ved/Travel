@@ -29,12 +29,12 @@ export default function CityList({ cities, onCityClick, selectedCity, theme }: C
   const borderColor = theme === 'neon-blue' ? 'border-cyan-500/30' : 'border-purple-500/30';
 
   return (
-    <GlassPanel className="p-6 h-full flex flex-col" glowColor={themeColor}>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className={`text-xl font-thin tracking-wider uppercase ${textColor}`}>
+    <GlassPanel className="p-4 sm:p-6 h-full flex flex-col" glowColor={themeColor}>
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h2 className={`text-lg sm:text-xl font-thin tracking-wider uppercase ${textColor}`}>
           Cities Visited
         </h2>
-        <div className={`${textColor} font-mono text-2xl`}>{cities.length}</div>
+        <div className={`${textColor} font-mono text-xl sm:text-2xl`}>{cities.length}</div>
       </div>
 
       <div className="mb-4 space-y-3">
@@ -45,13 +45,13 @@ export default function CityList({ cities, onCityClick, selectedCity, theme }: C
             placeholder="Search cities..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2 bg-black/50 border ${borderColor} rounded ${textColor} placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-${themeColor}-500 font-mono text-sm`}
+            className={`w-full pl-10 pr-4 py-2 bg-black/50 border ${borderColor} rounded ${textColor} placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-${themeColor}-500 font-mono text-xs sm:text-sm`}
           />
         </div>
 
         <button
           onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-          className={`flex items-center space-x-2 ${textColor} hover:${bgColor} px-3 py-2 rounded border ${borderColor} transition-all text-sm font-mono`}
+          className={`flex items-center space-x-2 ${textColor} hover:${bgColor} px-3 py-2 rounded border ${borderColor} transition-all text-xs sm:text-sm font-mono`}
         >
           <SortAsc className="w-4 h-4" />
           <span>{sortOrder === 'asc' ? 'A → Z' : 'Z → A'}</span>
@@ -76,7 +76,7 @@ export default function CityList({ cities, onCityClick, selectedCity, theme }: C
           >
             <MapPin className={`w-4 h-4 ${textColor} group-hover:animate-pulse`} />
             <div className="flex-1">
-              <div className={`font-mono text-sm ${textColor}`}>{city.name}</div>
+              <div className={`font-mono text-xs sm:text-sm ${textColor}`}>{city.name}</div>
             </div>
           </div>
         ))}

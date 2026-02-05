@@ -10,7 +10,7 @@ export default function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
     <button
       onClick={onToggle}
       className={`
-        fixed top-6 right-6 z-40 p-3 rounded-lg
+        fixed top-3 right-3 sm:top-6 sm:right-6 z-40 p-2 sm:p-3 rounded-lg
         backdrop-blur-md border transition-all duration-300
         ${
           theme === 'neon-blue'
@@ -23,7 +23,7 @@ export default function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
       }}
       title="Toggle Theme"
     >
-      <Palette className="w-5 h-5 animate-pulse" />
+      <Palette className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
     </button>
   );
 }

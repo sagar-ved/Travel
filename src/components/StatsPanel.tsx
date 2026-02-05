@@ -53,19 +53,19 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
   };
 
   return (
-    <GlassPanel className="p-6" glowColor={themeColor}>
-      <div className="space-y-6">
+    <GlassPanel className="p-4 sm:p-6" glowColor={themeColor}>
+      <div className="space-y-5 sm:space-y-6">
         <div className="text-center">
-          <div className={`text-6xl font-thin ${textColor} mb-2 tabular-nums`}>
+          <div className={`text-4xl sm:text-5xl lg:text-6xl font-thin ${textColor} mb-2 tabular-nums`}>
             {animatedCount}
           </div>
-          <div className="text-sm text-gray-400 font-mono tracking-wider uppercase">
+          <div className="text-xs sm:text-sm text-gray-400 font-mono tracking-wider uppercase">
             Cities Visited
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between text-sm">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-center justify-between text-xs sm:text-sm">
             <span className="text-gray-400 font-mono">India Explored</span>
             <span className={`${textColor} font-mono font-bold`}>
               {progressPercentage.toFixed(1)}%
@@ -83,22 +83,22 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div className="flex items-center space-x-3 p-3 bg-black/30 rounded border border-gray-700">
-            <MapPin className={`w-5 h-5 ${textColor}`} />
+            <MapPin className={`w-4 h-4 sm:w-5 sm:h-5 ${textColor}`} />
             <div>
-              <div className={`text-2xl font-thin ${textColor}`}>{citiesCount}</div>
-              <div className="text-xs text-gray-400 font-mono">Total Cities</div>
+              <div className={`text-xl sm:text-2xl font-thin ${textColor}`}>{citiesCount}</div>
+              <div className="text-[11px] sm:text-xs text-gray-400 font-mono">Total Cities</div>
             </div>
           </div>
 
           <div className="flex items-center space-x-3 p-3 bg-black/30 rounded border border-gray-700">
-            <TrendingUp className={`w-5 h-5 ${textColor}`} />
+            <TrendingUp className={`w-4 h-4 sm:w-5 sm:h-5 ${textColor}`} />
             <div>
-              <div className={`text-2xl font-thin ${textColor}`}>
+              <div className={`text-xl sm:text-2xl font-thin ${textColor}`}>
                 {remainingCount}
               </div>
-              <div className="text-xs text-gray-400 font-mono">Remaining</div>
+              <div className="text-[11px] sm:text-xs text-gray-400 font-mono">Remaining</div>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
           onClick={handleExport}
           className={`w-full flex items-center justify-center space-x-2 py-3 rounded border ${
             theme === 'neon-blue' ? 'border-cyan-500/30' : 'border-purple-500/30'
-          } ${textColor} hover:bg-${themeColor}-500/10 transition-all font-mono text-sm`}
+          } ${textColor} hover:bg-${themeColor}-500/10 transition-all font-mono text-xs sm:text-sm`}
         >
           <Download className="w-4 h-4" />
           <span>Export Travel Log</span>

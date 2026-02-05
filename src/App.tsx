@@ -44,15 +44,17 @@ function App() {
 
       <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
-      <div className="relative z-10 container mx-auto px-4 py-8 h-screen flex flex-col">
-        <header className="mb-6">
-          <div className="flex items-center justify-center space-x-4 mb-2">
-            <Radar className={`w-8 h-8 ${textColor} animate-pulse`} />
-            <h1 className={`text-5xl font-thin tracking-[0.3em] ${textColor} uppercase`}>
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:h-screen flex flex-col">
+        <header className="mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center sm:space-x-4 space-y-2 sm:space-y-0 mb-2">
+            <Radar className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 ${textColor} animate-pulse`} />
+            <h1
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-thin tracking-[0.2em] sm:tracking-[0.25em] lg:tracking-[0.3em] ${textColor} uppercase text-center`}
+            >
               Travel Command
             </h1>
           </div>
-          <p className="text-center text-gray-400 font-mono text-sm tracking-wider">
+          <p className="text-center text-gray-400 font-mono text-xs sm:text-sm tracking-[0.2em] sm:tracking-wider">
             INDIAN TRAVEL NAVIGATION SYSTEM
           </p>
         </header>
@@ -73,13 +75,13 @@ function App() {
             </GlassPanel>
           </div>
         ) : (
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-hidden">
-            <div className="lg:col-span-3 space-y-4 overflow-y-auto">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:overflow-hidden">
+            <div className="lg:col-span-3 space-y-4 lg:overflow-y-auto">
               <StatsPanel citiesCount={cities.length} cities={cities} theme={theme} />
             </div>
 
             <div className="lg:col-span-6">
-              <GlassPanel className="h-full p-4" glowColor={themeColor}>
+              <GlassPanel className="h-[50vh] sm:h-[60vh] lg:h-full p-3 sm:p-4" glowColor={themeColor}>
                 <IndiaMap
                   cities={cities}
                   selectedCity={selectedCity}
@@ -89,7 +91,7 @@ function App() {
               </GlassPanel>
             </div>
 
-            <div className="lg:col-span-3 overflow-hidden">
+            <div className="lg:col-span-3 lg:overflow-hidden">
               <CityList
                 cities={cities}
                 onCityClick={setSelectedCity}

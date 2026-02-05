@@ -46,27 +46,30 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
       <div className="absolute inset-0 bg-gradient-radial from-blue-900/20 via-transparent to-transparent" />
 
-      <div className="relative z-10 flex flex-col items-center space-y-8">
+      <div className="relative z-10 flex flex-col items-center space-y-6 sm:space-y-8 px-4">
         <div className="relative">
           <div className="absolute inset-0 animate-ping opacity-20">
-            <Radar className="w-24 h-24 text-cyan-400" />
+            <Radar className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 text-cyan-400" />
           </div>
-          <Radar className="w-24 h-24 text-cyan-400 animate-spin" style={{ animationDuration: '3s' }} />
+          <Radar
+            className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 text-cyan-400 animate-spin"
+            style={{ animationDuration: '3s' }}
+          />
         </div>
 
         <div className="flex flex-col items-center space-y-4">
-          <h1 className="text-4xl font-thin tracking-[0.3em] text-cyan-400 uppercase">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-thin tracking-[0.2em] sm:tracking-[0.25em] lg:tracking-[0.3em] text-cyan-400 uppercase text-center">
             Travel Command
           </h1>
 
-          <div className="w-80 h-1 bg-gray-800 rounded-full overflow-hidden">
+          <div className="w-60 sm:w-72 lg:w-80 h-1 bg-gray-800 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 shadow-lg shadow-cyan-500/50"
               style={{ width: `${progress}%` }}
             />
           </div>
 
-          <p className="text-cyan-300 font-mono text-sm tracking-wider animate-pulse">
+          <p className="text-cyan-300 font-mono text-xs sm:text-sm tracking-wider animate-pulse text-center">
             {scanText}
           </p>
 
