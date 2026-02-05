@@ -4,22 +4,26 @@ import { MapPin, Globe, TrendingUp, Download } from 'lucide-react';
 
 interface StatsPanelProps {
   citiesCount: number;
-  cities: { name: string }[];
+  cities: { name: string; visited: boolean }[];
   theme: 'neon-blue' | 'cyber-purple';
 }
 
 export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelProps) {
   const [animatedCount, setAnimatedCount] = useState(0);
 
+  // Calculate visited and remaining cities
+  const visitedCount = cities.filter(city => city.visited).length;
+  const remainingCount = citiesCount - visitedCount;
+
   useEffect(() => {
     let start = 0;
     const duration = 1000;
-    const increment = citiesCount / (duration / 16);
+    const increment = visitedCount / (duration / 16);
 
     const timer = setInterval(() => {
       start += increment;
-      if (start >= citiesCount) {
-        setAnimatedCount(citiesCount);
+      if (start >= visitedCount) {
+        setAnimatedCount(visitedCount);
         clearInterval(timer);
       } else {
         setAnimatedCount(Math.floor(start));
@@ -27,10 +31,10 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
     }, 16);
 
     return () => clearInterval(timer);
-  }, [citiesCount]);
+  }, [visitedCount]);
 
   const totalIndianCities = 200;
-  const progressPercentage = Math.min((citiesCount / totalIndianCities) * 100, 100);
+  const progressPercentage = Math.min((visitedCount / totalIndianCities) * 100, 100);
 
   const themeColor = theme === 'neon-blue' ? 'cyan' : 'purple';
   const textColor = theme === 'neon-blue' ? 'text-cyan-400' : 'text-purple-400';
@@ -84,7 +88,7 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
             <MapPin className={`w-5 h-5 ${textColor}`} />
             <div>
               <div className={`text-2xl font-thin ${textColor}`}>{citiesCount}</div>
-              <div className="text-xs text-gray-400 font-mono">Total</div>
+              <div className="text-xs text-gray-400 font-mono">Total Cities</div>
             </div>
           </div>
 
@@ -92,7 +96,7 @@ export default function StatsPanel({ citiesCount, cities, theme }: StatsPanelPro
             <TrendingUp className={`w-5 h-5 ${textColor}`} />
             <div>
               <div className={`text-2xl font-thin ${textColor}`}>
-                {totalIndianCities - citiesCount}
+                {remainingCount}
               </div>
               <div className="text-xs text-gray-400 font-mono">Remaining</div>
             </div>
