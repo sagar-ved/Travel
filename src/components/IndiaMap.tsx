@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { City } from '../types';
 import { getStatePaths, convertCoordinatesToSvg } from '../utils/mapUtils';
 import CityMarker from './CityMarker';
@@ -19,10 +19,36 @@ export default function IndiaMap({ cities, selectedCity, onCityClick, theme }: I
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // Initialize state paths
-  const statePaths = getStatePaths(MAP_WIDTH, MAP_HEIGHT);
+  const statePaths = useMemo(() => getStatePaths(MAP_WIDTH, MAP_HEIGHT), []);
+  const projectedCities = useMemo(
+    () =>
+      cities.map((city) => {
+        const { x, y } = convertCoordinatesToSvg(city.lat, city.lng);
+        return { ...city, x, y };
+      }),
+    [cities],
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const updateMobile = () => setIsMobile(mediaQuery.matches);
+    updateMobile();
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', updateMobile);
+    } else {
+      mediaQuery.addListener(updateMobile);
+    }
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', updateMobile);
+      } else {
+        mediaQuery.removeListener(updateMobile);
+      }
+    };
+  }, []);
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
@@ -91,7 +117,7 @@ export default function IndiaMap({ cities, selectedCity, onCityClick, theme }: I
             </pattern>
           </defs>
 
-          <rect width={MAP_WIDTH} height={MAP_HEIGHT} fill="url(#grid)" />
+          {!isMobile && <rect width={MAP_WIDTH} height={MAP_HEIGHT} fill="url(#grid)" />}
 
           {statePaths.map((state) => (
             <path
@@ -99,33 +125,30 @@ export default function IndiaMap({ cities, selectedCity, onCityClick, theme }: I
               d={state.path}
               fill="rgba(0, 0, 0, 0.6)"
               stroke={mapColor}
-              strokeWidth="1"
-              filter="url(#glow)"
+              strokeWidth={isMobile ? '0.8' : '1'}
+              filter={isMobile ? undefined : 'url(#glow)'}
               className="transition-all duration-300 hover:fill-opacity-80"
             >
               <title>{state.stateName} - {state.districtName}</title>
             </path>
           ))}
 
-          {cities.map((city) => {
-            const { x, y } = convertCoordinatesToSvg(city.lat, city.lng);
-            return (
-              <CityMarker
-                key={city.name}
-                city={city.name}
-                x={x}
-                y={y}
-                isSelected={selectedCity === city.name}
-                isHovered={hoveredCity === city.name}
-                isVisited={city.visited}
-                imageLink={city.imageLink}
-                onClick={onCityClick}
-                onMouseEnter={() => setHoveredCity(city.name)}
-                onMouseLeave={() => setHoveredCity(null)}
-                theme={theme}
-              />
-            );
-          })}
+          {projectedCities.map((city) => (
+            <CityMarker
+              key={city.name}
+              city={city.name}
+              x={city.x}
+              y={city.y}
+              isSelected={selectedCity === city.name}
+              isHovered={hoveredCity === city.name}
+              isVisited={city.visited}
+              imageLink={city.imageLink}
+              onClick={onCityClick}
+              onMouseEnter={() => setHoveredCity(city.name)}
+              onMouseLeave={() => setHoveredCity(null)}
+              theme={theme}
+            />
+          ))}
         </svg>
       </div>
     </div>

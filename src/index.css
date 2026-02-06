@@ -13,3 +13,13 @@
     background: radial-gradient(circle, var(--tw-gradient-stops));
   }
 }
+
+.glass-panel {
+  box-shadow: var(--glass-glow);
+}
+
+@media (max-width: 768px) {
+  .glass-panel {
+    box-shadow: none;
+  }
+}

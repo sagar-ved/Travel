@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 
 interface GlassPanelProps {
   children: ReactNode;
@@ -15,14 +15,16 @@ export default function GlassPanel({ children, className = '', glowColor = 'cyan
   return (
     <div
       className={`
-        backdrop-blur-md bg-black/40 border rounded-lg
+        glass-panel backdrop-blur-sm sm:backdrop-blur-md bg-black/40 border rounded-lg
         transition-all duration-300
         ${glowStyles[glowColor as keyof typeof glowStyles]}
         ${className}
       `}
       style={{
-        boxShadow: `0 0 20px ${glowColor === 'cyan' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(168, 85, 247, 0.2)'}`,
-      }}
+        '--glass-glow': `0 0 20px ${
+          glowColor === 'cyan' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(168, 85, 247, 0.2)'
+        }`,
+      } as CSSProperties}
     >
       {children}
     </div>

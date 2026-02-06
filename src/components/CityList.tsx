@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { City } from '../types';
 import GlassPanel from './GlassPanel';
 import { MapPin, Search, SortAsc } from 'lucide-react';
@@ -14,14 +14,16 @@ export default function CityList({ cities, onCityClick, selectedCity, theme }: C
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const filteredCities = cities
-    .filter((city) => city.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    .sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.name.localeCompare(b.name);
-      }
-      return b.name.localeCompare(a.name);
-    });
+  const filteredCities = useMemo(() => {
+    return cities
+      .filter((city) => city.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .sort((a, b) => {
+        if (sortOrder === 'asc') {
+          return a.name.localeCompare(b.name);
+        }
+        return b.name.localeCompare(a.name);
+      });
+  }, [cities, searchTerm, sortOrder]);
 
   const themeColor = theme === 'neon-blue' ? 'cyan' : 'purple';
   const textColor = theme === 'neon-blue' ? 'text-cyan-400' : 'text-purple-400';
